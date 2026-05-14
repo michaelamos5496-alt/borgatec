@@ -959,8 +959,83 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll('.services-section, .packages-section, .contact-section').forEach(section => {
         observer.observe(section);
     });
-});
 
+    // --- Modal Logic ---
+    const modalOverlay = document.getElementById("bookingModal");
+    const closeModalBtn = document.querySelector(".close-modal");
+    const selectedPackageSpan = document.getElementById("selectedPackageName");
+    const packageInput = document.getElementById("packageInput");
+    const bookButtons = document.querySelectorAll(".btn-book");
+
+    bookButtons.forEach(btn => {
+        btn.addEventListener("click", (e) => {
+            const packageName = e.target.getAttribute("data-package");
+            selectedPackageSpan.textContent = packageName;
+            packageInput.value = packageName;
+            modalOverlay.classList.add("active");
+            document.body.style.overflow = "hidden";
+        });
+    });
+
+    closeModalBtn.addEventListener("click", () => {
+        modalOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+    });
+
+    modalOverlay.addEventListener("click", (e) => {
+        if (e.target === modalOverlay) {
+            modalOverlay.classList.remove("active");
+            document.body.style.overflow = "";
+        }
+    });
+
+    document.getElementById("bookingForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        
+        // Extract form data
+        const packageName = document.getElementById("packageInput").value;
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const date = document.getElementById("date").value;
+        const details = document.getElementById("details").value;
+        
+        // Construct message
+        const messageText = `New Booking Request!\n\nPackage: ${packageName}\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\nDate: ${date}\n\nDetails:\n${details}`;
+        
+        // Construct URLs
+        const waNumber = "233247310056";
+        const waMessage = encodeURIComponent(messageText);
+        const waUrl = `https://wa.me/${waNumber}?text=${waMessage}`;
+        
+        const emailAddress = "weareborgatec@gmail.com";
+        const emailSubject = encodeURIComponent(`New Booking Request: ${packageName}`);
+        const emailBody = encodeURIComponent(messageText);
+        const emailUrl = `mailto:${emailAddress}?subject=${emailSubject}&body=${emailBody}`;
+        
+        // Open WhatsApp in new tab and Email in current window
+        window.open(waUrl, "_blank");
+        setTimeout(() => {
+            window.location.href = emailUrl;
+        }, 300);
+
+        // UI Feedback
+        const btn = document.querySelector(".btn-submit-form");
+        const originalText = btn.textContent;
+        btn.textContent = "REQUEST SENT!";
+        btn.style.background = "var(--accent-color)";
+        btn.style.color = "var(--bg-color)";
+        
+        setTimeout(() => {
+            modalOverlay.classList.remove("active");
+            document.body.style.overflow = "";
+            btn.textContent = originalText;
+            btn.style.background = "transparent";
+            btn.style.color = "var(--text-primary)";
+            e.target.reset();
+        }, 2000);
+    });
+});
     </script>
 
     <!-- Booking Modal -->
