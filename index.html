@@ -718,6 +718,21 @@ section {
         font-size: 14px;
     }
     
+    input[type="date"] {
+        -webkit-appearance: none;
+        appearance: none;
+        min-height: 45px;
+        line-height: normal;
+    }
+    
+    input[type="date"]::-webkit-datetime-edit {
+        color: var(--text-primary);
+    }
+    
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        filter: invert(1);
+    }
+    
     .btn-submit-form {
         padding: 14px;
         margin-top: 5px;
