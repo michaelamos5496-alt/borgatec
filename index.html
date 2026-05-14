@@ -567,6 +567,20 @@ section {
         background: rgba(10, 10, 10, 0.95);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
+
+    .hero-content {
+        padding-bottom: 30px;
+    }
+    .main-header {
+        font-size: 11vw !important;
+        margin-top: 15px;
+        line-height: 1.1;
+    }
+    .package-card .btn {
+        padding: 18px 20px;
+        font-size: 15px;
+    }
+
     }
     
     .brand-logo-container {
@@ -697,6 +711,9 @@ section {
         box-sizing: border-box;
         max-height: 85vh;
         overflow-y: auto;
+        margin: 0 auto;
+        position: relative;
+        left: 0;
     }
     
     .booking-modal h2 {
@@ -867,6 +884,7 @@ section {
         <aside class="sidebar">
             <div class="nav-icons">
                 <a href="#home" class="nav-item active" aria-label="Home"><i class="ri-home-5-fill"></i></a>
+                <a href="#packages" class="nav-item" aria-label="Packages"><i class="ri-box-3-fill"></i></a>
             </div>
             <div class="brand-logo-container">
                 <img src="data:image/png;base64,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" alt="Borga Tec Logo" class="brand-logo">
